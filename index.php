@@ -86,11 +86,11 @@ $nav = array(
                                 <li><a href="?r=perfil">Perfil</a></li>
                                 <?php if (isset($_SESSION['user']) && in_array('usuario', $nav[$_SESSION['user']['cargo']])) { ?>
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuario <b class="caret"></b></a>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuário <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="index.php?r=usuario/create">Novo Usuario</a></li>
+                                            <li><a href="index.php?r=usuario/create">Incluir</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="index.php?r=usuario/admin">Consultar Usuarios</a></li>
+                                            <li><a href="index.php?r=usuario/admin">Consultar</a></li>
 
 
                                         </ul>
@@ -100,9 +100,9 @@ $nav = array(
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cliente <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="index.php?r=cliente/create">Novo Cliente</a></li>
+                                            <li><a href="index.php?r=cliente/create">Incluir</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="index.php?r=cliente/admin">Consultar Clientes</a></li>
+                                            <li><a href="index.php?r=cliente/admin">Consultar</a></li>
                                         </ul>
                                     </li>
                                 <?php } ?>
@@ -110,9 +110,9 @@ $nav = array(
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Processos <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="index.php?r=processo/create">Novo Processo</a></li>
+                                            <li><a href="index.php?r=processo/create">Incluir</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="index.php?r=processo/admin">Consultar Processos</a></li>
+                                            <li><a href="index.php?r=processo/admin">Consultar</a></li>
 
 
                                         </ul>
@@ -122,9 +122,9 @@ $nav = array(
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tarefas <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="index.php?r=tarefa/create">Nova Tarefa</a></li>
+                                            <li><a href="index.php?r=tarefa/create">Incluir</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="index.php?r=tarefa/admin">Consultar Tarefas</a></li>
+                                            <li><a href="index.php?r=tarefa/admin">Consultar</a></li>
 
 
                                         </ul>
@@ -134,9 +134,9 @@ $nav = array(
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prazos <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="index.php?r=prazo/create">Novo Prazo</a></li>
+                                            <li><a href="index.php?r=prazo/create">Incluir</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="index.php?r=prazo/admin">Consultar Prazos</a></li>
+                                            <li><a href="index.php?r=prazo/admin">Consultar</a></li>
 
 
                                         </ul>
@@ -146,9 +146,9 @@ $nav = array(
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pagamentos <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="index.php?r=pagamentos/create">Novo Pagamento</a></li>
+                                            <li><a href="index.php?r=pagamentos/create">Incluir</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="index.php?r=pagamentos/admin">Consultar Pagamentos</a></li>
+                                            <li><a href="index.php?r=pagamentos/admin">Consultar</a></li>
 
 
                                         </ul>

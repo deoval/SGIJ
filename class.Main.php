@@ -184,9 +184,9 @@ Class Main {
     public static function getAdminLinks($r, $id_tb) {
         $folder = explode("/", $r);
         $html = "";
-        $html .= "<a class=\"action-links\" title='ver' href=index.php?r=" . $folder[0] . "/" . VIEW_FILENAME . "&id=$id_tb><img src=images/" . VIEW_FILENAME . ".png></a>";
-        $html .= "<a class=\"action-links\" title='atualizar' href=index.php?r=" . $folder[0] . "/" . UPDATE_FILENAME . "&id=$id_tb><img src=images/" . UPDATE_FILENAME . ".png></a>";
-        $html .= "<a class=\"action-links\" title='deletar' href=index.php?r=" . $folder[0] . "/" . DELETE_FILENAME . "&id=$id_tb><img src=images/" . DELETE_FILENAME . ".png></a>";
+        $html .= "<a class=\"action-links\" title='Visualizar' href=index.php?r=" . $folder[0] . "/" . VIEW_FILENAME . "&id=$id_tb><img src=images/" . VIEW_FILENAME . ".png></a>";
+        $html .= "<a class=\"action-links\" title='Alterar' href=index.php?r=" . $folder[0] . "/" . UPDATE_FILENAME . "&id=$id_tb><img src=images/" . UPDATE_FILENAME . ".png></a>";
+        $html .= "<a class=\"action-links\" title='Excluir' href=index.php?r=" . $folder[0] . "/" . DELETE_FILENAME . "&id=$id_tb><img src=images/" . DELETE_FILENAME . ".png></a>";
         return $html;
     }
 
