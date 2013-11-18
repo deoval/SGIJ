@@ -1,0 +1,119 @@
+
+CREATE TABLE dados_cliente(
+	id_dados_cliente  int not null auto_increment,
+	tipo_pessoa varchar(50),
+	estado varchar(100),
+	cidade varchar(100),
+	bairro varchar(100),
+	endereço varchar(100),
+	cep varchar(20),
+	numero varchar(20),
+	PRIMARY KEY(id_dados_cliente)
+);
+#(mensalista e varejista) - tipo cliente
+CREATE TABLE cliente(
+	id_cliente int not null auto_increment,
+	nome varchar(250),
+	email varchar(250),
+	tipo_cliente varchar(250),
+	id_dados_cliente int,
+	PRIMARY KEY(id_cliente),
+	FOREIGN KEY(id_dados_cliente) REFERENCES dados_cliente(id_dados_cliente)
+);
+CREATE TABLE pessoa_fisica(
+	id_pessoa_fisica int not null auto_increment,
+	rg varchar(20),
+	cpf varchar(20),
+	id_codigo_cliente_fisico int,
+	PRIMARY KEY(id_pessoa_fisica),
+	FOREIGN KEY(id_codigo_cliente_fisico) REFERENCES cliente(id_cliente)
+);
+CREATE TABLE pessoa_juridica(
+	id_pessoa_juridica int not null auto_increment,
+	inscricao_estadual varchar(50),
+	inscricao_municipal varchar(50),
+	cnpj varchar(50),
+	id_codigo_cliente_juridico int,
+	PRIMARY KEY(id_pessoa_juridica),
+	FOREIGN KEY(id_codigo_cliente_juridico) REFERENCES cliente(id_cliente)
+);
+CREATE TABLE usuario(
+	id int not null auto_increment,
+	login varchar(100),
+	senha varchar(100),
+	cargo varchar(100),
+	PRIMARY KEY(id)
+);
+CREATE TABLE advogado(
+	id_advogado int not null auto_increment,
+	endereco varchar(100),
+	cep varchar(20),
+	estado varchar(50),
+	cidade varchar(100),
+	bairro varchar(50),
+	numero varchar(20),
+	cpf varchar(20),
+	rg varchar(20),
+	nome varchar(250),
+	numero_oab  varchar(100),
+	id_usuario_advogado int,
+	PRIMARY KEY(id_advogado),
+	FOREIGN KEY(id_usuario_advogado) REFERENCES usuario(id)
+);
+CREATE TABLE pagamentos(
+	id_pagamento int not null auto_increment,
+	tempo_atraso varchar(50),
+	plano_pagamento varchar(50),
+	valor varchar(50),
+	parcelas_pagas varchar(50),
+	forma_pagamento varchar(50),
+	nome_cliente varchar(50),
+	status_pagamento varchar(50),
+	tipo_de_cliente varchar(50),
+	vencimento varchar(50),
+	PRIMARY KEY(id_pagamento)
+);
+CREATE TABLE processos(
+	id_processo int not null auto_increment,
+	cliente int not null,
+	advogado_alocado int not null,
+	natureza_da_acao varchar(50),
+	tipo_acao varchar(50),
+	data_abertura varchar(50),
+	posicao_cliente varchar(50),
+	status_processo varchar(50),
+	localizacao_documentos text,
+	numero_processo_tj  varchar(100),
+	PRIMARY KEY(id_processo)
+);
+
+CREATE TABLE tarefas(
+	id_tarefa int not null auto_increment,
+	participante int not null,
+	hora varchar(50),
+	data varchar(50),	
+	tarefa text,
+	PRIMARY KEY(id_tarefa)
+);
+
+CREATE TABLE prazos(
+	id_prazo int not null auto_increment,
+	natureza_da_acao text,
+	numero_processo  varchar(100),
+	cliente int not null,
+	tempo_do_prazo varchar(50),	
+	data_inicio varchar(50),	
+	data_limite varchar(50),
+	id_num_processo int,	
+	PRIMARY KEY(id_prazo),
+	FOREIGN KEY(id_num_processo) REFERENCES processos(id_processo)
+);
+CREATE TABLE telefones(
+	id_telefone int not null auto_increment,
+	numero_telefone varchar(250),
+	PRIMARY KEY(id_telefone),
+	id_telefone_cliente int,
+	id_telefone_advogado int,
+	FOREIGN KEY(id_telefone_cliente) REFERENCES cliente(id_cliente),
+	FOREIGN KEY(id_telefone_advogado) REFERENCES advogado(id_advogado)
+);

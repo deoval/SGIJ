@@ -1,0 +1,36 @@
+.navbar-inner
+{
+    background: none !important;
+}
+#conteudo{
+
+   /* padding-top: 10px;*/
+}
+header{
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#6668D7), to(#111111));
+    background: -moz-linear-gradient(top,#6668D7,#111111)repeat-y;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#6668D7, endColorstr=#111111)";
+    background: -ms-linear-gradient(top, #6668d7 0%,#111111 100%); /* IE10+ */
+    height: 120px !important;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+#menu{
+
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#111111), to(#666887));
+    background: -moz-linear-gradient(top,#111111,#666887)repeat-y;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#111111, endColorstr=#666887)";
+    background: -ms-linear-gradient(top, #111111 0%,#6668d7 100%); /* IE10+ */
+    padding-top: 9px;
+    border-top: 1px solid #29292E;
+}
+#cabecalho{
+
+    height: 175px;
+}
+
+.navbar .nav > li > a {
+
+    color: #dc8420 !important;
+    font-weight: bold;
+}

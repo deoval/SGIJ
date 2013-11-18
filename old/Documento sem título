@@ -1,0 +1,79 @@
+Bom dia
+Vinicius,
+
+Ontem acabei muito tarde revisando as funcionalidades do sistema. As considerações referentes a relatório, não conclui. Vou continuar a análise e envio ainda hoje para você. Abaixo segue relação das funcionalidades e considerações encontradas:
+
+Cliente -  filtros para pesquisar cliente por: ID, nome, CNPJ, CPF e tipo de cliente. Excluir os outros filtros de busca.
+Inserir mensagem ao termino do cadastro, alterar e exclusão de todos os módulos, como: Inclusão realizada com sucesso! , Alteração realizada com sucesso!, Tem certeza  de que deseja excluir registro? e Exclusão realizada com sucesso!
+É possível limpar os todos os campos após realização de cadastro ou inclusão?
+Incluir mais um campo para telefone. Não foi possível incluir outro número, como celular, no campo existente.
+Na pagina principal, menu principal, alterar a posição de usuário. Posiciona-lo antes de cliente.
+Criar cadastro do tipo de natureza da ação. Segue relação: Penal, trabalhista, pequenas causas, família, JECrim, orfanológico, execução penal e registro público.
+Amarrar a posição do cliente, como: réu e autor.
+Amarrar status do processo, como: Em andamento e Em encerrado.
+Amarrar status do pagamento, como: Pendente e quitado.
+Amarrar forma de pagamento, como: Cheque, deposito em conta, dinheiro, imóveis, objeto e outros.
+Inclusão de processo excluir a hora, não é necessário. Deixar somente a data.
+Inclusão de secretário (usuário), alterar o campo telefone para CFP.
+Inserir marcara para valor em pagamento, como: R$0,00
+
+
+Segue abaixo meus comentários e considerações sobre Atualização e exclusão de dados :
+
+Cliente 
+
+1- ao alterar e-mail - efetivou mas não criticou por exemplo a ausência de @. 
+
+2 - Ao tentar excluir cliente exibe mensagem pra confirmar e apagar, porém não tem o botão voltar ou cancelar. É obrigatório voltar pelo navegador.....
+
+3 - Não exibe mensagem: Arquivo atualizado ou salvo , seguindo o caso de uso. 
+
+4 - Percebi que o programa permite alterar data anterior e até a atual.
+
+
+Usuário
+
+1- Ao excluir usuário exibe a mensagem de confirmação, sem outra opção (voltar ou mesmo cancelar). Apesar da secretária só 
+ter telefone, exibe dados vazios de um usuário do tipo advogado.
+
+2- Ainda não exibe mensagem de dados atualizados ou excluídos (ver caso de uso)
+
+Processo
+
+1- Ao excluir usuário ou advogado, o sistema exibe as referências no processo ao cadastro apagado. Confirmar....
+
+
+2- Não exibe mensagem do caso de uso para atualizar ou apagar arquivo.
+
+3- Ao apagar processo apagou também prazos criados.
+
+Prazo
+
+1- Ao criar novo prazo exibe calendário a partir da data de hoje, não permite data anterior - OK
+
+2- Não exibe as mensagens de atualização ou exclusão concluídas (caso de uso)
+
+
+Tarefa
+
+1- datas livres, isto é, permite criar tarefa com data  anterior a presente.
+
+2- Não mostra o nome do advogado na visualização em dados da tarefa, somente o link (ID : 4)  por exemplo.
+
+3- Não exibe mensagem de arquivos atualizados ou apagados.
+
+4- Não exibe as mensagens de atualização ou exclusão concluídas (caso de uso)
+
+
+Pagamentos
+
+1- O calendário exibe datas anteriores a atual disponíveis para inclusão 
+
+2- Não exibe mensagem de arquivos atualizados ou apagados com sucesso (caso de uso)
+
+3- Ao tentar apagar não tem botão de retorno ou cancelar e o usuário deve clicar no botão voltar.....
+
+Relatórios 
+
+1- Somente o relatório Tipo de Cliente possui Exportar dados (PDF ou XLS).
+
