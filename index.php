@@ -158,15 +158,15 @@ $nav = array(
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Relatórios <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="index.php?r=relatorios/tipo_de_cliente">Relatórios Tipo de Cliente</a></li>
+                                            <li><a href="index.php?r=relatorios/tipo_de_cliente">Relatório de Rentabilidade</a></li>
                                             <li class="divider"></li>
                                             <li><a href="index.php?r=relatorios/alocacao_de_advogado">Relatório Alocação de Advogados</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="index.php?r=relatorios/rentabilidade">Relatório de Rentabilidade</a></li>
+                                            <li><a href="index.php?r=relatorios/rentabilidade">Relatório de Produtividade</a></li>
                                             <li class="divider"></li>
                                             <li><a href="index.php?r=relatorios/prazos">Relatório de Prazos</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="index.php?r=relatorios/natureza_da_acao">Relatórios de Natureza da Ação</a></li>
+                                            <li><a href="index.php?r=relatorios/natureza_da_acao">Relatório de Natureza da Ação</a></li>
                                             <li class="divider"></li>
                                         </ul>
                                     </li>
