@@ -2,101 +2,106 @@
 if (file_exists('class.PDOcrud.php')) {
     require_once( 'class.PDOcrud.php' );
 }
+
+$criteria = $_GET['criteria'];
+if (!empty($criteria)) {
+    $fieldcriteria = 'sum(valor)';
+    $tabela = array(TBL_CLIENTE, TBL_PROCESSOS, TBL_PAGAMENTOS);
+    $condition = " id_cliente = cliente and id_processo =  processos_id_processo ";
+    $str = TEXT_TIPO_CLIENTECOUNT;
+    $str_title = "Relatório de Rentabilidade";//TEXT_TIPO_CLIENTEXVALOR;
+} else {
+    $fieldcriteria = 'count(id_cliente)';
+    $tabela = array(TBL_CLIENTE);
+    $condition = "1";
+    $str = TEXT_TIPO_CLIENTEXVALOR;
+    $str_title = "Relatório de Rentabilidade";//TEXT_TIPO_CLIENTECOUNT;
+}
+
 $pdo = new conectaPDO(); //INICIA CONEXÃO PDO
-/* select sum(valor), usuario.login from pagamentos, processos, usuario where pagamentos.processos_id_processo = processos.id_processo and processos.advogado_alocado = usuario.id
-  group by usuario.id */
-$campos_da_tabela = array('id', 'sum(valor)', 'login');
-$tabela = array(TBL_USUARIO, TBL_PAGAMENTOS, TBL_PROCESSOS);
-
-$condition = " 1 ";
-
-if (!empty($_GET['m']) || !empty($_GET['y'])) {
-$m = $_GET['m'];
-$y = (empty($_GET['y']))?date("Y"):$_GET['y'];
-$b = $d%4;
-
-if(in_array($m,array( 1,3,5,7,8,10,12))){
-$d=31;
-
-}else if($m == 2){
-  if($b == 0){$d = 28;}else{$d=29;}
-}else{
-$d = 30;
-}
-if(!empty($m)){
-
-$m1 = $m;
-$m2 = $m;
-
-}else{
-$m1=1;
-$m2 = '12';
-}
-$condition .= " and ( vencimento BETWEEN '$y-$m1-01 00:00:00' AND  '$y-$m2-$d 23:00:00') ";
-}
-
-$condition .= " and advogado_alocado = id and processos_id_processo = id_processo ";
-$condition .= " group by id ";
-
+$campos_da_tabela = array($fieldcriteria, 'tipo_cliente');
+$condition .= " group by tipo_cliente ";
 $dados = $pdo->getArrayData($campos_da_tabela, $tabela, $condition);
 $pdo->endConnection(); //FIM DA CONEXÃO
-foreach ($dados as $dado) {
-    $datas[$dado['login']] = array('x_bar_value' => $dado['sum(valor)']);
-}
-?>        
-<link type="text/css" href="js/barra/ddchart.css" rel="stylesheet" />
-<style>.barra-bar-chart{border:2px solid rgba(151,187,205,1); }.x-axis-text{font-size:14px}.ddchart-x-axis {line-height:normal;overflow:visible;}</style>
-<script language="javascript" src="js/jquery.js" ></script>
-<script language="javascript" src="js/barra/jquery.ddchart.js"></script>         
-<script language="javascript">
-    $(function() {
-        $("#chart_simple_div").ddBarChart({
-            chartData: {
-                "COLUMNS":["X_BAR_LABEL","X_BAR_VALUE","X_BAR_COLOR", "TOOL_TIP_TITLE"],
-                "DATA":[
-<?php
-$mes = array('Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
+?>        <script src="js/pizza/raphael.js"></script>
 
-$ultimo_elemento = array_reverse(array_keys($datas));
-$ultimo_elemento = $ultimo_elemento[0]; //retorna ultimo elemento do array
-foreach ($datas as $key => $data) {
-    $spc = ",";
-    if ($key == $ultimo_elemento) {
-        $spc = ""; //no ie virgula no fim do array quebra js
+<script src="js/pizza/pie.js"></script>
+<style media="screen">
+    #holder {
+        height: 480px;
+        left: 50%;
+        margin: -240px 0 0 -320px;
+        position: relative;
+        top: 50%;
+        width: 640px;
     }
-    print "['" . $key . "'," . $data['x_bar_value'] . ",'rgba(151,187,205,0.5)','']{$spc}\n";
-}
-?>
-                                        ]
-                                    }, 
-                                  //  chartContext: "label",
-                                    chartBarClass :"barra-bar-chart",
-                                    animationDelay: 2000,
-                                    margin:2,
-                                    chartWrapperClass:'barra-bar-wrapper',
-                                });           
-                            });
-</script>
-<h2>Relatório rentabilidade x advogados(<?php print (empty($_GET['m'])?'todos os pagamentos' .(!empty($y)?"/" . $y:""):$mes[$m-1] . "/" . $y); ?>)</h2>
-<div style="border:1px solid #333;width:270px;float:right;padding:5px;text-align:center">
-    Escolha um ano<br />
-    <a class="btn" href=index.php?r=relatorios/rentabilidade&y=<?php print (date('Y') - 1); ?>>Ano <?php print (date('Y') - 1); ?></a>
-    <a class="btn" href=index.php?r=relatorios/rentabilidade&y=<?php print (date('Y')); ?>>Ano <?php print (date('Y')); ?></a>
-    <a class="btn" href=index.php?r=relatorios/rentabilidade&y=<?php print (date('Y') + 1); ?>>Ano <?php print (date('Y') + 1); ?></a>
-    Escolha um mês<br />
-<?php 
+    #copy {
+        bottom: 0;
+        font: 300 .7em "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+        position: absolute;
+        right: 1em;
+        text-align: right;
+    }
+    #copy a {
+        color: #fff;
+    }
+</style>
+<style media="print">
 
-foreach($mes as $key=>$m){ ?>
-    <a class="btn" style="width:200px" href=index.php?r=relatorios/rentabilidade&m=<?php print ($key+1); ?>&y=<?php print $_GET['y']; ?>><?php print $m ; ?></a>
-<?php
+    body {
+        background: #fff;
+        color: #000;
+        font: 100.1% "Lucida Grande", Lucida, Verdana, sans-serif;
+    }
+    #holder {
+        height: 480px;
+        left: 50%;
+        margin: 0 0 0 -320px;
+        position: relative !important;
+        top: 0;
+        width: 640px;
+    }
+    #copy {
+        bottom: 0;
+        font-size: .7em;
+        position: absolute;
+        right: 1em;
+        text-align: right;
+    }
+</style>
+<style media="screen">
+    #holder {
+        margin: -200px 0 0 -350px;
+        width: 700px;
+        height: 700px;
+    }
 
- } ?> 
+</style>
+<h2><?php print $str_title; ?></h2><br />
+<div class="right center piecorrect">
+    <a class='btn right action-links' href='index.php?r=relatorios/rentabilidade<?php print (empty($_GET['criteria']) ? "&criteria=1" : ""); ?>'><?php print $str; ?></a>
+    <br /> 
+    <h4><?php print EXPORT_DATA; ?><br /></h4>
+    <a href='export.php?r=relatorios/export/tipo_de_cliente-pdf'><img src=images/pdf.png /></a>
+    <a href='export.php?r=relatorios/export/tipo_de_cliente-xls'><img src=images/xls.png /></a>
+
 </div>
-<div id="chart_simple_div" style="position:relative; width:700px; height:400px; margin-bottom:20px"></div>
-<script>
-jQuery(document).ready(function() {
-jQuery('div.ddchart-y-axis div').prepend('R$ ');
-});
-
-</script>
+<table class="tabela">
+    <tbody>
+        <?php 
+$coundnum = 0;
+if(empty($criteria)){
+foreach ($dados as $dado) { 
+$countnum += $dado[$fieldcriteria];
+}
+}?>
+        <?php foreach ($dados as $dado) { ?>
+            <tr>
+                <th scope="row"> <?php print $dado['tipo_cliente']; ?> </th>
+                <td> <?php print empty($criteria)?(round($dado[$fieldcriteria]/$countnum*100,2)) . "% (" . $dado[$fieldcriteria] . ")":number_format($dado[$fieldcriteria], 2, '.', ''); ?></td>
+            </tr>
+        <?php } ?>
+    </tbody>
+</table>
+<div id="holder"></div>
 

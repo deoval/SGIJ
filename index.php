@@ -158,11 +158,11 @@ $nav = array(
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Relatórios <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="index.php?r=relatorios/tipo_de_cliente">Relatório de Rentabilidade</a></li>
+                                            <li><a href="index.php?r=relatorios/rentabilidade">Relatório de Rentabilidade</a></li>
                                             <li class="divider"></li>
                                             <li><a href="index.php?r=relatorios/alocacao_de_advogado">Relatório Alocação de Advogados</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="index.php?r=relatorios/rentabilidade">Relatório de Produtividade</a></li>
+                                            <li><a href="index.php?r=relatorios/produtividade">Relatório de Produtividade</a></li>
                                             <li class="divider"></li>
                                             <li><a href="index.php?r=relatorios/prazos">Relatório de Prazos</a></li>
                                             <li class="divider"></li>
@@ -178,7 +178,7 @@ $nav = array(
                 </div>
             </div>
         </div>
-        <div id="conteudo"></div>
+        <div id="conteudo">
         <div class="container">
             <div class="row">
                 <div class="span12">
@@ -195,7 +195,8 @@ $nav = array(
                 <p><?php print EMPRESA_NOME . " &copy; " . Date('Y'); ?></p>
             </footer>
 
-        </div> <!-- /container -->
+        </div>  <!-- /container -->
+        </div>
         <script>
             jQuery( document ).tooltip({
                 position: {
