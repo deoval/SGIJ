@@ -156,4 +156,114 @@ elseif($relatorio[1]=="rentabilidade"){
     $plot->PrintImage();
 }
 
+elseif ($relatorio[1]=="natureza_da_acao"){
+
+    $pdo = new conectaPDO(); //INICIA CONEXÃO PDO
+    $campos_da_tabela = array( 'natureza_da_acao', 'sum(valor)');
+    $tabela = array(TBL_PAGAMENTOS, TBL_PROCESSOS);
+    $condition = " processos_id_processo=id_processo ";
+    $condition .= "and status_pagamento='quitado'";
+    $condition .= " group by natureza_da_acao ";
+    $dados = $pdo->getArrayData($campos_da_tabela, $tabela, $condition);
+    $pdo->endConnection(); //FIM DA CONEXÃO
+    //var_dump($dados);
+
+    //Inicio para gerar o grafico
+    $grafico = new PHPlot(800, 400);
+    #Indicamos o t?tul do gr?fico e o t?tulo dos dados no eixo X e Y do mesmo
+    $grafico->SetTitle("Montante financeiro x natureza da ação");
+    $grafico->SetXTitle("Natureza da Ação");
+    $grafico->SetYTitle("Valor");
+
+    $grafico->SetImageBorderType('plain');
+    $grafico->SetYTickIncrement(100);
+    $grafico->SetYLabelType('data',0, 'R$');
+
+    #Definimos os dados do gr?fico
+
+    if(empty($dados[0])){
+        $dados = array(
+            array('',0));
+
+    }
+
+    $grafico->SetDataValues($dados);
+    #Neste caso, usariamos o gr?fico em barras
+    $grafico->SetPlotType("bars");
+    #Exibimos o gr?fico
+    $grafico->DrawGraph();
+
+
+}
+
+elseif($relatorio[1]=="produtividade"){
+
+    $pdo = new conectaPDO(); //INICIA CONEXÃO PDO
+    /* select sum(valor), usuario.login from pagamentos, processos, usuario where pagamentos.processos_id_processo = processos.id_processo and processos.advogado_alocado = usuario.id
+      group by usuario.id */
+    $campos_da_tabela = array('nome', 'sum(valor)');
+    $tabela = array(TBL_USUARIO, TBL_PAGAMENTOS, TBL_PROCESSOS);
+
+    $condition = " 1 ";
+
+    if (!empty($_GET['m']) || !empty($_GET['y'])) {
+        $m = $_GET['m'];
+        $y = (empty($_GET['y']))?date("Y"):$_GET['y'];
+        $b = $y%4;
+
+        if(in_array($m,array( 1,3,5,7,8,10,12))){
+            $d=31;
+
+        }else if($m == 2){
+            if($b == 0){$d = 28;}else{$d=29;}
+        }else{
+            $d = 30;
+        }
+        if(!empty($m)){
+
+            $m1 = $m;
+            $m2 = $m;
+
+        }else{
+            $m1=1;
+            $m2 = '12';
+        }
+        $condition .= " and ( vencimento BETWEEN '$y-$m1-01 00:00:00' AND  '$y-$m2-$d 23:00:00') ";
+    }
+
+    $condition .= " and advogado_alocado = id and processos_id_processo = id_processo ";
+    $condition .= " group by id ";
+
+    $dados = $pdo->getArrayData($campos_da_tabela, $tabela, $condition);
+    $pdo->endConnection(); //FIM DA CONEXÃO
+    //var_dump($dados);
+
+    //Inicio para gerar o grafico
+    $grafico = new PHPlot(800, 400);
+    #Indicamos o t?tul do gr?fico e o t?tulo dos dados no eixo X e Y do mesmo
+    $grafico->SetTitle("Rendimento em reais de cada advogado");
+    $grafico->SetXTitle("Advogados");
+    $grafico->SetYTitle("Valor");
+    $grafico->SetYLabelType('data',0, 'R$');
+
+    $grafico->SetImageBorderType('plain');
+    $grafico->SetYTickIncrement(100);
+
+    #Definimos os dados do gr?fico
+
+    if(empty($dados[0])){
+        $dados = array(
+            array('',0));
+
+    }
+
+    $grafico->SetDataValues($dados);
+    #Neste caso, usariamos o gr?fico em barras
+    $grafico->SetPlotType("bars");
+    #Exibimos o gr?fico
+    $grafico->DrawGraph();
+
+
+}
+
 ?>
