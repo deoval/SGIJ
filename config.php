@@ -1,6 +1,8 @@
 <?php
 
 //arquivo criado para organização das configurações
+//define('SQL_HOST', '192.168.0.11');
+//define('SQL_USER', 'JamesWeslley-PC');
 define('SQL_HOST', '127.0.0.1');
 define('SQL_USER', 'root');
 define('SQL_DB', 'Sistema2');
@@ -61,4 +63,7 @@ define('TBL_PAGAMENTOS', 'pagamentos');
 define('TBL_USUARIO', 'usuario');
 define('TBL_TELEFONES_USUARIO', 'telefones_advogados');
 define('TBL_ADVOGADO', 'advogado');
+
+//Seta o timezone principal do Brasil
+date_default_timezone_set('America/Sao_Paulo');
 ?>

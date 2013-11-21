@@ -8,7 +8,7 @@ $dt_a = date('Y-m-d H:i:s');
 
 $dt_f = $_GET['dt_f'];
 $year = (!empty($_GET['y']) ? $_GET['y'] : date('Y'));
-
+$is_data = array('data_limite');
 $pdo = new conectaPDO();
 $campos_da_tabela = array(
     'Numero Processo TJ' => 'numero_processo_tj',

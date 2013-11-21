@@ -3,16 +3,12 @@ if (file_exists('class.PDOcrud.php')) {
     require_once( 'class.PDOcrud.php' );
 }
 $pdo = new conectaPDO(); //INICIA CONEXÃO PDO
-/* select sum(valor), usuario.login from pagamentos, processos, usuario where pagamentos.processos_id_processo = processos.id_processo and processos.advogado_alocado = usuario.id
-  group by usuario.id */
-$campos_da_tabela = array('id', 'sum(valor)', 'login', 'nome');
-$tabela = array(TBL_USUARIO, TBL_PAGAMENTOS, TBL_PROCESSOS);
-
-$condition = " 1 ";
-
-if (!empty($_GET['m']) || !empty($_GET['y'])) {
+$campos_da_tabela = array('count(advogado_alocado)', 'login', 'nome');
+$tabela = array(TBL_USUARIO, TBL_PROCESSOS);
+$condition = " advogado_alocado = id ";
+if (!empty($_GET['m'])) {
 $m = $_GET['m'];
-$y = (empty($_GET['y']))?date("Y"):$_GET['y'];
+$y = date("Y");
 $b = $d%4;
 
 if(in_array($m,array( 1,3,5,7,8,10,12))){
@@ -23,25 +19,21 @@ $d=31;
 }else{
 $d = 30;
 }
-if(!empty($m)){
-
-$m1 = $m;
-$m2 = $m;
-
-}else{
-$m1=1;
-$m2 = '12';
+$condition .= " and ( data_abertura BETWEEN '$y-$m-01 00:00:00' AND  '$y-$m-$d 23:00:00') ";
 }
-$condition .= " and ( vencimento BETWEEN '$y-$m1-01 00:00:00' AND  '$y-$m2-$d 23:00:00') ";
+if ($_GET['dt'] == 'atual') {
+ 
+   // $condition .= " and data_abertura >= '" . date('Y-m-d H:i:s') . "'";
+    $str = " Todos os processos ";
+} else {
+    $str = " Processos que ainda serão abertos ";
 }
-
-$condition .= " and advogado_alocado = id and processos_id_processo = id_processo ";
-$condition .= " group by id ";
-
+$condition .= " group by advogado_alocado ";
 $dados = $pdo->getArrayData($campos_da_tabela, $tabela, $condition);
 $pdo->endConnection(); //FIM DA CONEXÃO
+//var_dump($dados);
 foreach ($dados as $dado) {
-    $datas[$dado['nome']] = array('x_bar_value' => $dado['sum(valor)']);
+    $datas[$dado['nome']] = array('x_bar_value' => $dado['count(advogado_alocado)']);
 }
 ?>        
 <link type="text/css" href="js/barra/ddchart.css" rel="stylesheet" />
@@ -55,8 +47,7 @@ foreach ($dados as $dado) {
                 "COLUMNS":["X_BAR_LABEL","X_BAR_VALUE","X_BAR_COLOR", "TOOL_TIP_TITLE"],
                 "DATA":[
 <?php
-$mes = array('Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
-
+$mes = array('Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro');
 $ultimo_elemento = array_reverse(array_keys($datas));
 $ultimo_elemento = $ultimo_elemento[0]; //retorna ultimo elemento do array
 foreach ($datas as $key => $data) {
@@ -69,34 +60,24 @@ foreach ($datas as $key => $data) {
 ?>
                                         ]
                                     }, 
-                                  //  chartContext: "label",
+                                    chartContext: "",
                                     chartBarClass :"barra-bar-chart",
                                     animationDelay: 2000,
                                     margin:2,
-                                    chartWrapperClass:'barra-bar-wrapper',
+                                    chartWrapperClass:'barra-bar-wrapper'
                                 });           
                             });
 </script>
-<h2>Relatório de Produtividade(<?php print (empty($_GET['m'])?'todos os pagamentos' .(!empty($y)?"/" . $y:""):$mes[$m-1] . "/" . $y); ?>)</h2>
+<h2>Relatório de Alocação de Advogados(<?php print (empty($_GET['m'])?'todos os processos':$mes[$m-1] . "/" . $y); ?>)</h2>
+<!--a class='btn right piecorrect' href='index.php?r=relatorios/alocacao_de_advogado<?php print ($_GET['dt'] != "atual" ? "&dt=atual" : ""); ?>'><?php print $str; ?></a-->
 <div style="border:1px solid #333;width:270px;float:right;padding:5px;text-align:center">
-    Escolha um ano<br />
-    <a class="btn" href=index.php?r=relatorios/rentabilidade&y=<?php print (date('Y') - 1); ?>>Ano <?php print (date('Y') - 1); ?></a>
-    <a class="btn" href=index.php?r=relatorios/rentabilidade&y=<?php print (date('Y')); ?>>Ano <?php print (date('Y')); ?></a>
-    <a class="btn" href=index.php?r=relatorios/rentabilidade&y=<?php print (date('Y') + 1); ?>>Ano <?php print (date('Y') + 1); ?></a>
     Escolha um mês<br />
 <?php 
 
 foreach($mes as $key=>$m){ ?>
-    <a class="btn" style="width:200px" href=index.php?r=relatorios/rentabilidade&m=<?php print ($key+1); ?>&y=<?php print $_GET['y']; ?>><?php print $m ; ?></a>
+    <a class="btn" style="width:200px" href=index.php?r=relatorios/alocacao_de_advogado&m=<?php print ($key+1); ?>><?php print $m ; ?></a>
 <?php
 
  } ?> 
 </div>
 <div id="chart_simple_div" style="position:relative; width:700px; height:400px; margin-bottom:20px"></div>
-<script>
-jQuery(document).ready(function() {
-jQuery('div.ddchart-y-axis div').prepend('R$ ');
-});
-
-</script>
-

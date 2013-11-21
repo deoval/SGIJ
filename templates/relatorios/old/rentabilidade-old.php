@@ -1,5 +1,5 @@
 <?php
-/*if (file_exists('class.PDOcrud.php')) {
+if (file_exists('class.PDOcrud.php')) {
     require_once( 'class.PDOcrud.php' );
 }
 
@@ -22,9 +22,62 @@ $pdo = new conectaPDO(); //INICIA CONEXÃO PDO
 $campos_da_tabela = array($fieldcriteria, 'tipo_cliente');
 $condition .= " group by tipo_cliente ";
 $dados = $pdo->getArrayData($campos_da_tabela, $tabela, $condition);
-$pdo->endConnection(); //FIM DA CONEXÃO */
-?>
-<h2>Rentabilidade<?php //print $str_title; ?></h2><br />
+$pdo->endConnection(); //FIM DA CONEXÃO
+?>        <script src="js/pizza/raphael.js"></script>
+
+<script src="js/pizza/pie.js"></script>
+<style media="screen">
+    #holder {
+        height: 480px;
+        left: 50%;
+        margin: -240px 0 0 -320px;
+        position: relative;
+        top: 50%;
+        width: 640px;
+    }
+    #copy {
+        bottom: 0;
+        font: 300 .7em "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+        position: absolute;
+        right: 1em;
+        text-align: right;
+    }
+    #copy a {
+        color: #fff;
+    }
+</style>
+<style media="print">
+
+    body {
+        background: #fff;
+        color: #000;
+        font: 100.1% "Lucida Grande", Lucida, Verdana, sans-serif;
+    }
+    #holder {
+        height: 480px;
+        left: 50%;
+        margin: 0 0 0 -320px;
+        position: relative !important;
+        top: 0;
+        width: 640px;
+    }
+    #copy {
+        bottom: 0;
+        font-size: .7em;
+        position: absolute;
+        right: 1em;
+        text-align: right;
+    }
+</style>
+<style media="screen">
+    #holder {
+        margin: -200px 0 0 -350px;
+        width: 700px;
+        height: 700px;
+    }
+
+</style>
+<h2><?php print $str_title; ?></h2><br />
 <div class="right center piecorrect">
     <a class='btn right action-links' href='index.php?r=relatorios/rentabilidade<?php print (empty($_GET['criteria']) ? "&criteria=1" : ""); ?>'><?php print $str; ?></a>
     <br /> 
@@ -50,6 +103,5 @@ $countnum += $dado[$fieldcriteria];
         <?php } ?>
     </tbody>
 </table>
-<div id="holder">
-    <?php  $caminho = "templates/relatorios/geraRelatorio.php?r=relatorios/rentabilidade";?><img src="<?php echo $caminho ?>"></div>
+<div id="holder"></div>
 

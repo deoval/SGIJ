@@ -49,14 +49,14 @@ $campos_da_tabela = array(
 
 );
 $dnatureza_acao = array(
-'Penal' => 'penal',
-'Trabalhista' => 'trabalhista',
-'Pequenas causas' => 'pequenas causas',
-'Família' => 'familia',
-'JECrim' => 'jecrim',
-'Orfanológico' => 'orfanologico',
-'Execução penal' => 'execucao penal',
-'Registro público'=>'registro publico'
+'Penal' => 'Penal',
+'Trabalhista' => 'Trabalhista',
+'Pequenas causas' => 'Pequenas causas',
+'Família' => 'Família',
+'JECrim' => 'Jecrim',
+'Orfanológico' => 'Orfanológico',
+'Execução penal' => 'Execucao penal',
+'Registro público'=>'Registro público'
 );
 $dposicao_cliente = array(
 'Réu' => 'Reu',

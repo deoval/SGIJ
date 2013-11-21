@@ -50,7 +50,6 @@ $nav = array(
     </head>
 
     <body>
-
     <div id="cabecalho">
         <header>
             <img height="200px" width="200px" src="images/Logo.png">
@@ -184,7 +183,7 @@ $nav = array(
                 <div class="span12">
                     <?php print Main::getBreadCrumb($_GET['r'], $_GET['id']); ?>
                     <?php
-                    include(Main::getRoutes($_GET['r']));
+                        include(Main::getRoutes($_GET['r']));
                     ?>
                 </div>
             </div>
