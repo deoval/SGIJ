@@ -32,12 +32,19 @@ $condition .= " and data_limite between '". $dt_a ."' and '". $dt_f ."'";
 $dados = $pdo->getArrayData($campos_da_tabela, $tabela, $condition);
 $pdo->endConnection(); //FIM DA CONEXÃO
 ?>
-<h1>Relatório de prazos</h1>
+<h2 class="left" style="width: 75%;" >Relatório de prazos</h2>
+<div class="center">
+    <h4><?php print EXPORT_DATA; ?><br /></h4>
+    <a href=export.php?r=relatorios/export/prazos-pdf&dt_a=<?php echo $dt_a ?>&dt_f=<?php echo $dt_f ?> ><img src=images/pdf.png /></a>
+    <a href=export.php?r=relatorios/export/prazos-xls&dt_a=<?php echo $dt_a ?>&dt_f=<?php echo $dt_f ?> ><img src=images/xls.png /></a>
+
+</div>
+
 <form id='form-search' method='GET' action='<?php echo $_SERVER["REQUEST_URI"] ?>'>
 <input type='hidden' name='r' value='<?php echo $r ?>'>
 <p>O intervalo é da data de hoje até a data selecionada</p>
 &nbsp&nbsp&nbsp
-<input type='text' placeholder='Data Final' name='dt_f' value='' id='data_fim'/>
+<input type='text' placeholder='Data Limite' name='dt_f' value='' id='data_fim'/>
 &nbsp&nbsp&nbsp
 <button type='submit' style='margin-bottom:10px' class='btn btn-default'>Consultar</button>
 </form>

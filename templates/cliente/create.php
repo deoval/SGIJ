@@ -4,6 +4,31 @@ if (file_exists('class.PDOcrud.php')) {
     require_once( 'class.PDOcrud.php' );
 }
 if ($_POST && !empty($_POST)) {
+
+    $pdo = new conectaPDO(); //INICIA CONEXÃO PDO
+    $campos_da_tabela_existente = array(
+        'ID' => 'id_cliente'
+    );
+    if (Main::formatSlashes($_POST['tipo_pessoa'])=="pessoa_juridica")
+    {
+        $tabela = array(TBL_CLIENTE, TBL_PESSOA_JURIDICA);
+        $condition = "id_cliente = id_codigo_cliente_juridica and (inscricao_municipal = '" . Main::formatSlashes($_POST['inscricao_municipal']) . "'
+        or inscricao_estadual = '" . Main::formatSlashes($_POST['inscricao_estadual']) . "'
+        or cnpj = '" . Main::formatSlashes($_POST['cnpj']) . "')";
+        $msg_erro="Inscricao_Estadual, Inscrição Municipal ou CNPJ existente ";
+    }
+    else{
+        $tabela = array(TBL_CLIENTE,TBL_PESSOA_FISICA);
+        $condition = "id_cliente = id_codigo_cliente_fisica and ( cpf = '" . Main::formatSlashes($_POST['cpf']) . "'
+        or rg = '" . Main::formatSlashes($_POST['rg']) . "')" ;
+        $msg_erro="RG ou CPF existente ";
+    }
+
+    $dados_cliente_existente = $pdo->getArrayData($campos_da_tabela_existente, $tabela, $condition);
+    if (!empty($dados_cliente_existente)) {
+        $erro = 1;
+    }
+
     $pdo = new conectaPDO(); //INICIA CONEXÃO PDO
     $campos = array(
         'id_cliente' => Main::formatSlashes($_POST['id_cliente']),
@@ -25,7 +50,7 @@ if ($_POST && !empty($_POST)) {
     );
     $tabela = TBL_CLIENTE;
 
-    //insere os dados na tabela cliente
+    if ($erro != 1)
     $success = $pdo->insertData($campos, $tabela);
 
     $campos = array('tipo_pessoa' => array(
@@ -44,13 +69,15 @@ if ($_POST && !empty($_POST)) {
     $campos_da_tabela["id_codigo_cliente_" . str_replace('pessoa_', '', $_POST['tipo_pessoa'])] = $success;
     $campos_da_tabela["id_" . $_POST['tipo_pessoa']] = "null";
     $tabela = $_POST['tipo_pessoa'];
+    if ($erro != 1)
     $pdo->insertData($campos_da_tabela, $tabela);
 
-
+if ($erro != 1) {
     $pdo->endConnection(); //FIM DA CONEXÃO
     print '<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a><strong> ' . INSERT_SUCCESS . ' </strong></div>';
     //Main::redirect('index.php?r=cliente/' . UPDATE_FILENAME . '&id=' . $success, 2);
     Main::redirect('index.php?r=cliente/create',1);
+}
 }
 $campos_da_tabela = array(
     'Nome' => 'nome',
@@ -82,9 +109,12 @@ $dropdown = array('tipo_pessoa' => array(
     ),
     'tipo_cliente' => array('Mensalista' => 'Mensalista', 'Varejista' => 'Varejista')
 );
+
+
 ?>
+
 <h1>Novo Cliente</h1>
-<div id="error"></div>
+<div id="error"><?php if ($erro == 1) print $msg_erro; ?></div>
 <form id="form-update" class="form-update" method="POST">
     <input type='hidden' class='input-block-level' name='id_cliente' placeholder='null' value="null" />
     <?php
@@ -140,8 +170,17 @@ $post = !empty($_POST[$campos])?$_POST[$campos]:'' ;
         jQuery(".choose").change(function () {
             $(".choose-dropdown." + jQuery(this).attr('id') ).css('display','none');
             $("." + jQuery(this).val()).css('display','block');
-            
+
         }).change();
+        <?php     if (Main::formatSlashes($_POST['tipo_pessoa'])=="pessoa_juridica"){  ?>
+        $(".choose-dropdown.tipo_pessoa").css('display','none');
+        $(".pessoa_juridica").css('display','block');
+        $(".choose option").filter(function() {
+            return $(this).text() == 'pessoa juridica';
+        }).attr('selected', true);
+
+        <?php     } ?>
+
         jQuery("#form-update").submit(function(){
             jQuery('#error').html("");
 function IsEmail(email) {

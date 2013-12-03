@@ -52,11 +52,11 @@ $dnatureza_acao = array(
 'Penal' => 'Penal',
 'Trabalhista' => 'Trabalhista',
 'Pequenas causas' => 'Pequenas causas',
-'Família' => 'Família',
+'Família' => 'Familia',
 'JECrim' => 'Jecrim',
-'Orfanológico' => 'Orfanológico',
+'Orfanológico' => 'Orfanologico',
 'Execução penal' => 'Execucao penal',
-'Registro público'=>'Registro público'
+'Registro público'=>'Registro publico'
 );
 $dposicao_cliente = array(
 'Réu' => 'Reu',

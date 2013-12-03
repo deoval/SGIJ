@@ -190,7 +190,7 @@ jQuery('#error').append(' Email invalido!<br />');
         jQuery(".choose").change(function () {
             $(".choose-dropdown." + jQuery(this).attr('id') ).css('display','none');
             $("." + jQuery(this).val()).css('display','block');
-            
+
         }).change();
     });
 </script>

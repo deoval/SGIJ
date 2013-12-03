@@ -4,7 +4,17 @@
 ?>
 
 
-<h2>Relatório de Alocação de Advogados<?php //print "(" . (empty($_GET['m'])?'todos os processos':$mes[$m-1] . "/" . $y).")"; ?></h2>
+<h2  class="left" style="width: 75%;" >Relatório de Alocação de Advogados<?php //print "(" . (empty($_GET['m'])?'todos os processos':$mes[$m-1] . "/" . $y).")"; ?></h2>
+<div class="center">
+    <h4><?php print EXPORT_DATA; ?><br /></h4>
+    <a href=export.php?r=relatorios/export/alocacao_de_advogados-pdf&m=<?php echo $_GET['m'] ?> ><img src=images/pdf.png /></a>
+    <a href=export.php?r=relatorios/export/alocacao_de_advogados-xls&m=<?php echo $_GET['m'] ?>><img src=images/xls.png /></a>
+
+</div>
+<br>
+<br>
+<br>
+
 <!--a class='btn right piecorrect' href='index.php?r=relatorios/alocacao_de_advogado<?php print ($_GET['dt'] != "atual" ? "&dt=atual" : ""); ?>'><?php print $str; ?></a-->
 <div style="border:1px solid #333;width:270px;float:right;padding:5px;text-align:center">
     Escolha um mês<br />

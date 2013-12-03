@@ -1,4 +1,7 @@
 <?php
+$dt_a =  $_GET['dt_a'];
+
+$dt_f = $_GET['dt_f'];
 
 if (file_exists('config.php')) {
     require_once( 'config.php' );
@@ -8,42 +11,17 @@ if (file_exists('class.PDOcrud.php')) {
 }
 $pdo = new conectaPDO(); //INICIA CONEXÃO PDO
 $campos_da_tabela = array(
-    'Nome' => 'nome',
-    'E-mail' => 'email',
-    'Tipo de Cliente' => 'tipo_cliente',
-    'Plano de pagamento' => 'plano_pagamento',
-    'Forma de pagamento' => 'forma_pagamento',
-    'Status do pagamento' => 'status_pagamento',
-    'Valor' => 'sum(valor)'
+    'Numero Processo TJ' => 'numero_processo_tj',
+    'Data Limite' => 'data_limite',
+    'Tipo de Prazo' => 'tipo_de_prazo',
+    'Tempo restante' => 'CONCAT(datediff(data_limite, now()), " dias")'
 );
-
-$tabela = array(TBL_CLIENTE, TBL_PROCESSOS, TBL_PAGAMENTOS);
-
-$condition .= " id_cliente = cliente and id_processo = processos_id_processo
-group by tipo_cliente,id_cliente ";
-
-/* 	$campos_da_tabela = array(
-  'Id Processo'=>'id_processo',
-  'Numero do Processo(TJ)'=>'numero_processo_tj',
-  'Nome'=>'nome',
-  'E-mail'=>'email',
-  'Tipo de Cliente'=>'tipo_cliente',
-  'Natureza da A&ccedil;&atilde;o'=>'natureza_da_acao',
-  'Status do processo'=>'status_processo',
-  'Plano de pagamento'=>'plano_pagamento',
-  'Forma de pagamento'=>'forma_pagamento',
-  'Status do pagamento'=>'status_pagamento',
-  'Valor'=>'sum(valor)'
-  );
-
-  $tabela = array(TBL_CLIENTE, TBL_PROCESSOS, TBL_PAGAMENTOS);
-
-  $condition .= " id_cliente = cliente and id_processo = processos_id_processo
-  group by tipo_cliente,id_processo "; */
-
+$tabela = array(TBL_PRAZOS, TBL_PROCESSOS);
+$condition = " id_num_processo = id_processo";
+$condition .= " and data_limite between '". $dt_a ."' and '". $dt_f ."'";
 $dados = $pdo->getArrayData($campos_da_tabela, $tabela, $condition);
 $pdo->endConnection(); //FIM DA CONEXÃO
-$arquivo = 'tipo_de_cliente_xls.xls';
+$arquivo = 'prazos_xls.xls';
 
 $html = '';
 $html .= '<table width=1000px>';

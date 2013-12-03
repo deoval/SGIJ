@@ -14,18 +14,14 @@ $pdo = new conectaPDO(); //INICIA CONEXÃO PDO
 
 $campos_da_tabela = array(
     'Nome' => 'nome',
-    'E-mail' => 'email',
     'Tipo de Cliente' => 'tipo_cliente',
-    'Plano de pagamento' => 'plano_pagamento',
-    'Forma de pagamento' => 'forma_pagamento',
-    'Status do pagamento' => 'status_pagamento',
-    'Valor' => 'sum(valor)'
+    'Status do pagamento'=>'status_pagamento',
+    'Valor' => 'valor'
 );
 
 $tabela = array(TBL_CLIENTE, TBL_PROCESSOS, TBL_PAGAMENTOS);
 
-$condition .= " id_cliente = cliente and id_processo = processos_id_processo
-group by tipo_cliente,id_cliente ";
+$condition .= " id_cliente = cliente and id_processo = processos_id_processo";
 
 
 /* 	$campos_da_tabela = array(
@@ -81,6 +77,6 @@ $mpdf->WriteHTML($stylesheet, 1); // The parameter 1 tells that this is css/styl
 
 $mpdf->WriteHTML($html, 2);
 
-$mpdf->Output('tipo_de_cliente_pdf.pdf', 'D');
+$mpdf->Output('rentabilidade_pdf.pdf', 'D');
 exit;
 ?>
