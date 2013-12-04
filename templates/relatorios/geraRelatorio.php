@@ -65,7 +65,7 @@ if ($relatorio[1]=="alocacao_de_advogado"){
     //Inicio para gerar o grafico
     $grafico = new PHPlot(800, $ypos);
     #Indicamos o titulo do grafico e o titulo dos dados no eixo X e Y do mesmo
-    $title = "Alocação por processos";
+    $title = "Número de processos X Advogados";
     $mes = array (1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril", 5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto", 9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro");
     $title .= " em ". $mes[$_GET['m']];
    	$grafico->SetTitle(utf8_decode($title));
@@ -152,8 +152,14 @@ elseif($relatorio[1]=="rentabilidade"){
 		$graph->SetDataValues(decode_array($dadosPlot1));
 		$graph->SetYTickIncrement(1);  //a smaller graph now - so we set a new tick increment
 
-
-		$graph->SetXTitle("");
+        $graph->SetFontGD('y_label',2,null );
+        $graph->SetFontGD('x_label',2,null );
+        $graph->SetFontGD('y_title',4,null );
+        $graph->SetFontGD('x_title',4,null );
+        $graph->SetFontGD('legend',2,null );
+        $graph->SetFontGD('title',5,null );
+		$graph->SetTitle('Quantidade de Clientes X Tipo de Cliente');
+        $graph->SetXTitle("");
 		$graph->SetYTitle("Quantidade");
 		$graph->SetPlotType("lines");
 		$graph->SetLineWidth(3);
@@ -218,9 +224,15 @@ elseif($relatorio[1]=="rentabilidade2"){
     $graph->SetDataType("text-data");  //Must be called before SetDataValues
 
 	$graph->SetDataValues(decode_array($dadosPlot));
-
+    $graph->SetTitle('Valor Montante X Tipo de Cliente');
 	$graph->SetXTitle("");
 	$graph->SetYTitle("Valor");
+    $graph->SetFontGD('y_label',2,null );
+    $graph->SetFontGD('x_label',2,null );
+    $graph->SetFontGD('y_title',4,null );
+    $graph->SetFontGD('x_title',4,null );
+    $graph->SetFontGD('legend',2,null );
+    $graph->SetFontGD('title',5,null );
 	//$graph->SetYTickIncrement(10);
     $graph->SetXTickLabelPos('none');
     $graph->SetXTickPos('none');
@@ -344,7 +356,7 @@ elseif($relatorio[1]=="produtividade"){
     //Inicio para gerar o grafico
     $grafico = new PHPlot(800, $ypos);
     #Indicamos o t?tul do gr?fico e o t?tulo dos dados no eixo X e Y do mesmo
-    $title = "Rendimento em reais de cada advogado";
+    $title = "Valor Montante X Advogados";
     $mes = array (1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril", 5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto", 9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro");
     $title .= " em ". $mes[$_GET['m']];
     $grafico->SetTitle(utf8_decode($title));
