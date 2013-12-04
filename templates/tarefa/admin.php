@@ -64,10 +64,22 @@ $pdo->endConnection(); //FIM DA CONEXÃO
         </select>
 
         <button type='submit' style='margin-bottom:10px' class='btn btn-default'>Consultar</button>
+        <div class="center right ">
+            <h4><?php print EXPORT_DATA; ?><br /></h4>
+            <a href=export.php?r=relatorios/export/tarefa-pdf&dt_i=<?php echo $dt_i ?>&dt_f=<?php echo $dt_f ?>&adv=<?php echo $adv ?>><img src=images/pdf.png /></a>
+            <a href=export.php?r=relatorios/export/tarefa-xls&dt_i=<?php echo $dt_i ?>&dt_f=<?php echo $dt_f ?>&adv=<?php echo $adv ?>><img src=images/xls.png /></a>
+
+        </div>
     </form>
         <?php //print Main::getForm($_SERVER["REQUEST_URI"], $r, $campos_da_tabela, array('c' => $campo_procurado, 't' => $termo_de_busca)); ?>
         <?php //print TEXT_DEFAULT_FILTER . "<a class='btn current right' href='index.php?r=tarefa/admin" . (!empty($campo_procurado) ? "&c=$campo_procurado" : "") . (!empty($termo_de_busca) ? "&t=$termo_de_busca" : "") . ($_GET['date'] != "all" ? "&date=all" : "") . "'>" . (($_GET['date'] == "all") ? TEXT_DISPLAY_FILTER : TEXT_DISPLAY_ALL) . "</a>"; ?>
     </tr>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
     <tr>
         <?php
         foreach (array_keys($campos_da_tabela) as $campos) {
