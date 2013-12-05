@@ -100,12 +100,14 @@ elseif($relatorio[1]=="rentabilidade"){
 
     $fieldcriteria = 'COUNT( id_cliente )';
     $tabela = array(TBL_CLIENTE, TBL_PROCESSOS, TBL_PAGAMENTOS);
-    $condition = " id_cliente = cliente and id_processo =  processos_id_processo and status_pagamento =  'quitado'";
+    $condition = " id_cliente = cliente
+AND id_processo = processos_id_processo
+AND status_pagamento =  'quitado'";
 
 
     $pdo = new conectaPDO(); //INICIA CONEXï¿½O PDO
-    $campos_da_tabela = array('vencimento', 'tipo_cliente');
-    $condition .= " group by tipo_cliente, DATE_FORMAT( vencimento , '%m' )";
+    $campos_da_tabela = array("id_cliente", "vencimento" , "tipo_cliente" );
+    $condition .= " group by id_cliente, DATE_FORMAT( vencimento,  '%m' )";
     $dados = $pdo->getArrayData($campos_da_tabela, $tabela, $condition);
     $pdo->endConnection(); //FIM DA CONEXï¿½O
     //var_dump($dados);
@@ -115,29 +117,35 @@ elseif($relatorio[1]=="rentabilidade"){
 
     }
     $dadosPlot1 = array (
-        array("Janeiro",0,0),
-        array("Fevereiro",0,0),
-        array("Março",0,0),
-        array("Abril",0,0),
-        array("Maio",0,0),
-        array("Junho",0,0),
-        array("Julho",0,0),
-        array("Agosto",0,0),
-        array("Setembro",0,0),
-        array("Outubro",0,0),
-        array("Novembro",0,0),
-        array("Dezembro",0,0)
+        array("Janeiro",0.02,0),
+        array("Fevereiro",0.02,0),
+        array("Março",0.02,0),
+        array("Abril",0.02,0),
+        array("Maio",0.02,0),
+        array("Junho",0.02,0),
+        array("Julho",0.02,0),
+        array("Agosto",0.02,0),
+        array("Setembro",0.02,0),
+        array("Outubro",0.02,0),
+        array("Novembro",0.02,0),
+        array("Dezembro",0.02,0)
     );
+
     foreach($dados as $indexnum => $arrayBD){
+
         foreach ($arrayBD as $indexlet => $value){
-            if($indexlet == 'vencimento'){
+            if($indexlet == "vencimento"){
 
                 if($arrayBD['tipo_cliente']=='Mensalista'){
 
-                    $dadosPlot1[verMes($value)-1][1] += 1;
+
+                    $dadosPlot1[verMes($value)-1][1] = $dadosPlot1[verMes($value)-1][1] + 1;
+
+
                 }
                 else if ($arrayBD['tipo_cliente']=='Varejista'){
-                    $dadosPlot1[verMes($value)-1][2] += 1;
+
+                        $dadosPlot1[verMes($value)-1][2] = $dadosPlot1[verMes($value)-1][2] + 1;
                 }
 
             }
