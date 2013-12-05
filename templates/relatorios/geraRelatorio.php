@@ -98,66 +98,40 @@ if ($relatorio[1]=="alocacao_de_advogado"){
 }
 elseif($relatorio[1]=="rentabilidade"){
 
-    $fieldcriteria = 'COUNT( id_cliente )';
-    $tabela = array(TBL_CLIENTE, TBL_PROCESSOS, TBL_PAGAMENTOS);
-    $condition = " id_cliente = cliente
-AND id_processo = processos_id_processo
-AND status_pagamento =  'quitado'";
+    $pdo = new conectaPDO(); //INICIA CONEXÃO PDO
 
+    $campos_da_tabela = array(
+        'Tipo de Cliente' => 'count(tipo_cliente)',
 
-    $pdo = new conectaPDO(); //INICIA CONEXï¿½O PDO
-    $campos_da_tabela = array("id_cliente", "vencimento" , "tipo_cliente" );
-    $condition .= " group by id_cliente, DATE_FORMAT( vencimento,  '%m' )";
-    $dados = $pdo->getArrayData($campos_da_tabela, $tabela, $condition);
-    $pdo->endConnection(); //FIM DA CONEXï¿½O
-    //var_dump($dados);
-    if(empty($dados[0])){
-        $dados = array(
-            array('',0));
-
-    }
-    $dadosPlot1 = array (
-        array("Janeiro",0.02,0),
-        array("Fevereiro",0.02,0),
-        array("Março",0.02,0),
-        array("Abril",0.02,0),
-        array("Maio",0.02,0),
-        array("Junho",0.02,0),
-        array("Julho",0.02,0),
-        array("Agosto",0.02,0),
-        array("Setembro",0.02,0),
-        array("Outubro",0.02,0),
-        array("Novembro",0.02,0),
-        array("Dezembro",0.02,0)
     );
 
-    foreach($dados as $indexnum => $arrayBD){
+    $tabela = array(TBL_CLIENTE);
 
-        foreach ($arrayBD as $indexlet => $value){
-            if($indexlet == "vencimento"){
+    $condition = "1";
+    $condition .= " group by tipo_cliente";
 
-                if($arrayBD['tipo_cliente']=='Mensalista'){
+    $dados = $pdo->getArrayData($campos_da_tabela, $tabela, $condition);
+    $pdo->endConnection(); //FIM DA CONEXÃO
 
-
-                    $dadosPlot1[verMes($value)-1][1] = $dadosPlot1[verMes($value)-1][1] + 1;
-
-
-                }
-                else if ($arrayBD['tipo_cliente']=='Varejista'){
-
-                        $dadosPlot1[verMes($value)-1][2] = $dadosPlot1[verMes($value)-1][2] + 1;
-                }
-
+    foreach ($dados as $index => $dado ){
+        foreach ($dado as $indexlet => $value){
+            if ($index == 0){
+                $dados[$index][$indexlet] = 'Mensalista';
             }
+            elseif ($index ==1){
+                $dados[$index][$indexlet] = 'Varejista';
+            }
+            $aux = $value;
+            $dados[$index][1] = $aux;
         }
     }
-    //var_dump($dadosPlot1);
+    //var_dump($dados);
     //Define the object
 		$graph =& new PHPlot(1000,400);
 		$graph->SetDataType("text-data");  //Must be called before SetDataValues
 
 
-		$graph->SetDataValues(decode_array($dadosPlot1));
+		$graph->SetDataValues(decode_array($dados));
 		$graph->SetYTickIncrement(1);  //a smaller graph now - so we set a new tick increment
 
         $graph->SetFontGD('y_label',2,null );
@@ -169,10 +143,10 @@ AND status_pagamento =  'quitado'";
 		$graph->SetTitle('Quantidade de Clientes X Tipo de Cliente');
         $graph->SetXTitle("");
 		$graph->SetYTitle("Quantidade");
-		$graph->SetPlotType("lines");
+		$graph->SetPlotType("bars");
 		$graph->SetLineWidth(3);
         $graph->SetDataColors(array('#6668D7','#dc8420'));
-        $graph->SetLegend(array('Mensalista', 'Varejista'));
+        //$graph->SetLegend(array('Mensalista', 'Varejista'));
         $graph->SetXTickLabelPos('none');
         $graph->SetXTickPos('none');
         $graph->SetNewPlotAreaPixels(68,null,null,null);
