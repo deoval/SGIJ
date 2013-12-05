@@ -21,7 +21,7 @@ $pdo->endConnection(); //FIM DA CONEXÃO
 
 $html = '';
 $html .= '<table border="1" width="800px">';
-$html .= '<tr>';
+$html .= '<tr id="topotab">';
 foreach (array_keys($campos_da_tabela) as $ct) {
     $html .= '<td class="titulo"><b>' . $ct . '</b></td>';
 }

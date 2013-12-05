@@ -14,6 +14,7 @@ $pdo = new conectaPDO(); //INICIA CONEXÃO PDO
 
 $campos_da_tabela = array(
     'Nome' => 'nome',
+    'Email' => 'email',
     'Tipo de Cliente' => 'tipo_cliente',
     'Status do pagamento'=>'status_pagamento',
     'Valor' => 'valor'
@@ -48,7 +49,7 @@ $pdo->endConnection(); //FIM DA CONEXÃO
 
 
 $html = '';
-$html .= '<table>';
+$html .= '<table  border="1">';
 $html .= '<tr>';
 foreach (array_keys($campos_da_tabela) as $ct) {
     $html .= '<td class="titulo"><b>' . $ct . '</b></td>';
@@ -57,7 +58,7 @@ $html .= '</tr>';
 foreach ($dados as $dado) {
     $html .= '<tr>';
     foreach ($campos_da_tabela as $ct) {
-        $html .= '<td><b>' . $dado[$ct] . '</b></td>';
+        $html .= '<td ><b>' . $dado[$ct] . '</b></td>';
     }
     $html .= '</tr>';
 }

@@ -49,7 +49,7 @@ $pdo->endConnection(); //FIM DA CONEXÃO
 <button type='submit' style='margin-bottom:10px' class='btn btn-default'>Consultar</button>
 </form>
     <table class="table">
-        <tr>
+        <tr id="topotab">
             <?php
             foreach (array_keys($campos_da_tabela) as $campos) {
                 print "<th>$campos</th>";
