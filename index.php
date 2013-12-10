@@ -8,7 +8,7 @@ if (is_file('./class.Main.php')) {
     require_once('./class.Main.php');
 }
 $nav = array(
-    'advogado' => array('processo', 'prazo'),
+    'advogado' => array('processo','tarefa', 'prazo'),
     'secretaria' => array('cliente', 'tarefa'),
     'advogado_socio' => array('cliente', 'tarefa', 'usuario', 'processo', 'prazo', 'pagamento', 'relatorio')
 );

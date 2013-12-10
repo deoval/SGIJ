@@ -10,7 +10,7 @@ Class Main {
         $routexy = explode("/", $post_param);
         //limit serve para limitar acesso aos recursos de template pela primeira parte da rota (pagamentos, perfil, logout)
         $limit = array(
-            'advogado' => array('perfil', 'processo', 'pagamentos', 'logout', 'prazo', ''),
+            'advogado' => array('perfil', 'processo', 'pagamentos', 'logout', 'prazo', 'tarefa'),
             'secretaria' => array('perfil', 'cliente', 'tarefa', 'logout', '')
         );
         /*
